@@ -1,0 +1,49 @@
+.tour-details {
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+
+  .tour-title {
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .main-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+
+  .tour-description {
+    font-size: 1.2em;
+    line-height: 1.5;
+    margin-bottom: 20px;
+
+    p {
+      margin-bottom: 15px;
+    }
+  }
+
+  .tour-info {
+    margin-bottom: 20px;
+
+    h3 {
+      margin-bottom: 10px;
+      font-size: 1.5em;
+    }
+  }
+
+  .tour-images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .tour-image {
+      width: calc(50% - 10px);
+      margin-bottom: 10px;
+      border-radius: 8px;
+    }
+  }
+}

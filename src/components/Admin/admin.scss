@@ -1,0 +1,48 @@
+.admin {
+  &__wrapper {
+    padding-top: 70px;
+    min-height: 100vh;
+    border-top: 1px solid #000302;
+  }
+
+  &__start {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 220px;
+    height: 100%;
+    background-color: #090031;
+  }
+
+
+
+  &__start--nav-item {
+    margin-left: 30px;
+    padding: 15px 0;
+    display: flex;
+    align-items: center;
+  }
+  &__start--nav-item span {
+    margin-right: 10px;
+  }
+
+  &__start--nav-link.active {
+    display: block;
+    background-color: #fd5056;
+  }
+
+  &__start--nav-link {
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    line-height: 19.5px;
+    color: #fff;
+  }
+
+  &__end{
+    width: 100%;
+    max-width: calc(100% - 220px);
+    margin-left: 220px;
+  }
+
+}

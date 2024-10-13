@@ -1,0 +1,33 @@
+.admin_main {
+  margin-top: 20px;
+  position: relative;
+  width: 100%;
+  &__carousel {
+    height: 550px;
+    position: relative;
+    border-radius: 20px;
+
+    & img {
+      border-radius: 20px;
+      width: 100%;
+      object-fit: cover;
+      height: 550px;
+    }
+
+    &__btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 120px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      // padding: 5px 10px !important;
+      cursor: pointer;
+      &:hover {
+        background-color: darkred;
+      }
+    }
+  }
+}
