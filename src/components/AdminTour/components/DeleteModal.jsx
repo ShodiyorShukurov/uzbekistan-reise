@@ -4,20 +4,20 @@ import PropTypes from "prop-types";
 const DeleteModal = ({ deleteModal, closeDeleteModal, handleDelete }) => {
   return (
     <Modal
-      title="O'chirish"
+      title="Delete"
       open={deleteModal}
       onCancel={closeDeleteModal}
       style={{ top: 20 }}
       footer={[
         <Button key="back" onClick={closeDeleteModal}>
-          Bekor qilish
+          Cancel
         </Button>,
         <Button key="submit" type="primary" danger onClick={handleDelete}>
-          O&apos;chirish
+          Delete
         </Button>,
       ]}
     >
-      <p>Rasmni o&apos;chirmoqchimisiz?</p>
+      <p>Are you sure you want to delete this tour?</p>
     </Modal>
   );
 };

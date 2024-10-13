@@ -24,7 +24,7 @@ const CountryPage = () => {
   if (isLoading) {
     return (
       <Admin>
-        <p>Yuklanmoqda...</p>
+        <p>Loading...</p>
       </Admin>
     );
   }
@@ -40,7 +40,7 @@ const CountryPage = () => {
             selectItem={selectItem}
             refreshData={refreshData}
           />
-          <h1>Ma&apos;lumot yo&apos;q</h1>
+          <h1>Data not found</h1>
         </Admin>
       );
     }
@@ -53,7 +53,10 @@ const CountryPage = () => {
           selectItem={selectItem}
           refreshData={refreshData}
         />
-        <Alert message="Rasmlarni yuklashda xatolik yuz berdi" type="error" />
+        <Alert
+          message="An error occurred while loading the images"
+          type="error"
+        />
       </Admin>
     );
   }

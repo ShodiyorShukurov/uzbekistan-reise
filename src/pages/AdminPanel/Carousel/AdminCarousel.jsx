@@ -22,7 +22,7 @@ const AdminCarousel = () => {
   if (isLoading) {
     return (
       <Admin>
-        <p>Yuklanmoqda...</p>
+        <p>Loading...</p>
       </Admin>
     );
   }
@@ -37,7 +37,7 @@ const AdminCarousel = () => {
             handleCancel={handleCancel}
             refreshData={refreshData}
           />
-          <h1>Ma&apos;lumot yo&apos;q</h1>
+          <h1>Data Not Found</h1>
         </Admin>
       );
     } else {
@@ -49,7 +49,10 @@ const AdminCarousel = () => {
             handleCancel={handleCancel}
             refreshData={refreshData}
           />
-          <Alert message="Rasmlarni yuklashda xatolik yuz berdi" type="error" />
+          <Alert
+            message="An error occurred while loading images"
+            type="error"
+          />
         </Admin>
       );
     }

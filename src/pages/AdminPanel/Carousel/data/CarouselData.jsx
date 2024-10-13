@@ -22,7 +22,7 @@ const CarouselData = ({ openDeleteModal }) => {
                 icon={<DeleteOutlined />}
                 onClick={() => openDeleteModal(image.id)}
               >
-                O&apos;chirish
+                Delete
               </Button>
             </div>
           ))}

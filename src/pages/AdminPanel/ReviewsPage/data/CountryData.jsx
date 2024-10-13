@@ -21,16 +21,19 @@ const CountryData = ({ openDeleteModal, handleEdit }) => {
       title: "ID",
       dataIndex: "id",
       key: "id",
+      align: "center",
     },
     {
       title: "Country Name",
       dataIndex: "country",
       key: "country",
+      align: "center",
     },
     {
       title: "Text",
       dataIndex: "text",
       key: "text",
+      align: "center",
     },
     {
       title: "Status",
@@ -41,6 +44,7 @@ const CountryData = ({ openDeleteModal, handleEdit }) => {
           onChange={() => handleEdit("id", "status")}
         />
       ),
+      align: "center",
     },
     {
       title: "Actions",
@@ -53,15 +57,16 @@ const CountryData = ({ openDeleteModal, handleEdit }) => {
             icon={<DeleteOutlined />}
             onClick={() => openDeleteModal(record.id)}
           >
-            O&apos;chirish
+            Delete
           </Button>
         </>
       ),
+      align: "center",
     },
   ];
 
   return (
-    <div className="picture-page">
+    <div className="p-1">
       <Table
         columns={columns}
         dataSource={data}

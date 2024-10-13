@@ -1,6 +1,7 @@
 import { Image, Button } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import usePicture from "../../../../hooks/UsePicture";
+import PropTypes from "prop-types";
 import "../picture.css";
 
 const PictureData = ({ openDeleteModal }) => {
@@ -23,11 +24,15 @@ const PictureData = ({ openDeleteModal }) => {
         ))
       ) : (
         <div className="no-data">
-          <p>Rasm yo'q</p>
+          <p>Not Image</p>
         </div>
       )}
     </div>
   );
+};
+
+PictureData.propTypes = {
+  openDeleteModal: PropTypes.func.isRequired,
 };
 
 export default PictureData;

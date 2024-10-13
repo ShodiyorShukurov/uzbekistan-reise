@@ -10,7 +10,7 @@ import {
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import Api from "../../../../api";
-import PropTypes from "prop-types"; 
+import PropTypes from "prop-types";
 
 const CarouselModal = ({
   isModalVisible,
@@ -27,16 +27,16 @@ const CarouselModal = ({
       // if (file && typeof file.size === "number") {
       //   const isLt10M = file.size / 1024 / 1024 < 10; // 10MB
       //   if (!isLt10M) {
-      //     message.error(`${file.name} rasm 10MB dan katta bo'lmasligi kerak!`);
+      //     message.error(`${file.name} must be less than 10MB!`);
       //     return Upload.LIST_IGNORE;
       //   }
       // } else {
-      //   message.error("Fayl hajmini aniqlashda xato yuz berdi.");
+      //   message.error("Error determining file size.");
       //   return Upload.LIST_IGNORE;
       // }
 
       if (fileList.length >= 1) {
-        message.error("Faqat bitta fayl yuklash mumkin!");
+        message.error("Only one file can be uploaded!");
         return Upload.LIST_IGNORE;
       }
 
@@ -58,17 +58,17 @@ const CarouselModal = ({
       const response = await Api.post("/carousel/add", formData);
       if (response.data.data) {
         notification.success({
-          message: "Muvaffaqiyatli",
-          description: "Ma'lumot muvaffaqiyatli yuborildi!",
+          message: "Success",
+          description: "Data submitted successfully!",
         });
       }
       handleCancel();
-      refreshData()
+      refreshData();
     } catch (error) {
       notification.error({
-        message: "Xatolik",
+        message: "Error",
         description:
-          "Ma'lumot yuborishda xatolik yuz berdi. Iltimos, qayta urinib ko'ring.",
+          "There was an error submitting the data. Please try again.",
       });
       console.error("Failed:", error);
     }
@@ -76,8 +76,8 @@ const CarouselModal = ({
 
   const onFinishFailed = (errorInfo) => {
     notification.error({
-      message: "Formada xatolik",
-      description: "Iltimos, ma'lumotlarni to'g'ri kiriting!",
+      message: "Form Error",
+      description: "Please enter the data correctly!",
     });
     console.log("Failed:", errorInfo);
   };
@@ -85,11 +85,11 @@ const CarouselModal = ({
   return (
     <>
       <Button type="primary" onClick={showModal}>
-        Rasm qo&apos;shish
+        Add a Picture
       </Button>
 
       <Modal
-        title="Rasm qo'shish"
+        title="Add Picture"
         open={isModalVisible}
         onCancel={handleCancel}
         style={{ top: 20 }}
@@ -103,22 +103,22 @@ const CarouselModal = ({
           autoComplete="on"
         >
           <Form.Item
-            label="Rasm"
+            label="Picture"
             name="attachment"
-            rules={[{ required: true, message: "Iltimos, faylni yuklang!" }]}
+            rules={[{ required: true, message: "Please upload a file!" }]}
           >
             <Upload {...uploadProps} accept="image/*">
-              <Button icon={<UploadOutlined />}>Yuklash uchun bosing</Button>
+              <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>
           </Form.Item>
 
           <Form.Item>
             <Space size="large">
               <Button htmlType="submit" type="primary">
-                Yuborish
+                Submit
               </Button>
               <Button type="primary" danger onClick={handleCancel}>
-                Bekor qilish
+                Cancel
               </Button>
             </Space>
           </Form.Item>
@@ -127,7 +127,6 @@ const CarouselModal = ({
     </>
   );
 };
-
 
 CarouselModal.propTypes = {
   isModalVisible: PropTypes.bool.isRequired,

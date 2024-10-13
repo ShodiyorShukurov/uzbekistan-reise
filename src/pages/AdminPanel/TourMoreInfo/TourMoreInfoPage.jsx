@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import Admin from "../../../components/Admin";
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Api from "../../../api";
-import "./TourMoreInfoPage.scss"; // SCSS faylini import qilish
+import "./TourMoreInfoPage.scss"; // Importing SCSS file
 
 const TourMoreInfoPage = () => {
   const { id } = useParams();
@@ -23,12 +23,16 @@ const TourMoreInfoPage = () => {
 
   console.log(tourDetails);
   if (!tourDetails) {
-    return <Admin>Yuklanmoqda...</Admin>;
+    return <Admin>Loading...</Admin>;
   }
 
   return (
     <Admin>
       <div className="tour-details">
+        <div className="tour-info mt-5">
+          <h3>Tour ID: {tourDetails.id}</h3>
+          <p>Day Count: {tourDetails.day}</p>
+        </div>
         <h1 className="tour-title">{tourDetails.location}</h1>
         <img
           className="main-image"
@@ -36,16 +40,11 @@ const TourMoreInfoPage = () => {
           alt={tourDetails.main_image_name}
         />
 
-        <h2 className="text text-center"> Tour description</h2>
+        <h2 className="text text-center">Tour Description</h2>
         <div
           className="tour-description"
           dangerouslySetInnerHTML={{ __html: tourDetails.data }}
         />
-
-        <div className="tour-info mt-5">
-          <h3>Tour ID: {tourDetails.id}</h3>
-          <p>Day Count: {tourDetails.day}</p>
-        </div>
       </div>
     </Admin>
   );

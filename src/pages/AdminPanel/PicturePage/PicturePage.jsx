@@ -22,13 +22,13 @@ const PicturePage = () => {
   if (isLoading) {
     return (
       <Admin>
-        <p>Rasmlar yuklanmoqda, iltimos kuting...</p>
+        <p>Loading...</p>
       </Admin>
     );
   }
 
   if (error) {
-    if (error.status == 404) {
+    if (error.status === 404) {
       return (
         <Admin>
           <CarouselModal
@@ -37,7 +37,7 @@ const PicturePage = () => {
             handleCancel={handleCancel}
             refreshData={refreshData}
           />
-          <h1>Rasm yuklang</h1>
+          <h1>Data Not Found</h1>
         </Admin>
       );
     } else {
@@ -49,11 +49,10 @@ const PicturePage = () => {
             handleCancel={handleCancel}
             refreshData={refreshData}
           />
-
           <Alert
-            message="Rasmlarni yuklashda xatolik yuz berdi"
+            message="An error occurred while loading images"
             type="error"
-            description="Iltimos, sahifani yangilab qayta urinib ko'ring."
+            description="Please refresh the page and try again."
             showIcon
           />
         </Admin>

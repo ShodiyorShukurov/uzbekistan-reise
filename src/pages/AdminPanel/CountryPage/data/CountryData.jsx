@@ -8,7 +8,7 @@ const CountryData = ({ openDeleteModal, handleEdit }) => {
 
   const countryData = data.map((country) => ({
     id: country.id,
-    country: country.name, 
+    country: country.name,
   }));
 
   const columns = [
@@ -16,11 +16,13 @@ const CountryData = ({ openDeleteModal, handleEdit }) => {
       title: "ID",
       dataIndex: "id",
       key: "id",
+      align: "center",
     },
     {
       title: "Country Name",
-      dataIndex: "country", // country deb yozildi
+      dataIndex: "country", // The data index is correctly labeled as 'country'
       key: "country",
+      align: "center",
     },
     {
       title: "Actions",
@@ -41,22 +43,22 @@ const CountryData = ({ openDeleteModal, handleEdit }) => {
             icon={<DeleteOutlined />}
             onClick={() => openDeleteModal(record.id)}
           >
-            O&apos;chirish
+            Delete
           </Button>
         </>
       ),
+      align: "center",
     },
   ];
 
   return (
-    <div className="picture-page">
-      <Table
-        columns={columns}
-        dataSource={countryData} // 'countryData' to'g'ri yozildi
-        rowKey="id"
-        pagination={false}
-      />
-    </div>
+    <Table
+      style={{ marginTop: "20px" }}
+      columns={columns}
+      dataSource={countryData} // 'countryData' is correctly referenced
+      rowKey="id"
+      pagination={false}
+    />
   );
 };
 

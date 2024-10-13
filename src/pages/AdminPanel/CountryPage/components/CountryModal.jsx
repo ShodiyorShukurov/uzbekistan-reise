@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Modal, Button, Form, notification, Space, Input } from "antd";
-import PropTypes from "prop-types"; 
+import PropTypes from "prop-types";
 import Api from "../../../../api";
 
 const CountryModal = ({
@@ -8,16 +8,16 @@ const CountryModal = ({
   showModal,
   handleCancel,
   selectItem,
-  refreshData
+  refreshData,
 }) => {
   const [form] = Form.useForm();
-console.log(selectItem)
+  console.log(selectItem);
 
   useEffect(() => {
     if (isModalVisible) {
       if (selectItem && Object.keys(selectItem).length > 0) {
         form.setFieldsValue({
-          name: selectItem.country || "", 
+          name: selectItem.country || "",
         });
       } else {
         form.resetFields();
@@ -36,8 +36,8 @@ console.log(selectItem)
         const response = await Api.put(`/country/edit`, data);
         if (response.data.data) {
           notification.success({
-            message: "Muvaffaqiyatli",
-            description: "Ma'lumot muvaffaqiyatli yangilandi!",
+            message: "Successful",
+            description: "Data has been successfully updated!",
           });
         }
       } else {
@@ -45,18 +45,18 @@ console.log(selectItem)
         const response = await Api.post("/country/add", data);
         if (response.data.data) {
           notification.success({
-            message: "Muvaffaqiyatli",
-            description: "Ma'lumot muvaffaqiyatli yuborildi!",
+            message: "Successful",
+            description: "Data has been successfully submitted!",
           });
         }
       }
-      refreshData()
+      refreshData();
       handleCancel(); // Close the modal after success
     } catch (error) {
       notification.error({
-        message: "Xatolik",
+        message: "Error",
         description:
-          "Ma'lumot yuborishda xatolik yuz berdi. Iltimos, qayta urinib ko'ring.",
+          "An error occurred while submitting data. Please try again.",
       });
       console.error("Failed:", error);
     }
@@ -64,8 +64,8 @@ console.log(selectItem)
 
   const onFinishFailed = (errorInfo) => {
     notification.error({
-      message: "Formada xatolik",
-      description: "Iltimos, ma'lumotlarni to'g'ri kiriting!",
+      message: "Form Error",
+      description: "Please enter the data correctly!",
     });
     console.log("Failed:", errorInfo);
   };
@@ -73,11 +73,11 @@ console.log(selectItem)
   return (
     <>
       <Button type="primary" onClick={showModal}>
-        Mamlakat qo&apos;shish
+        Add Country
       </Button>
 
       <Modal
-        title="Mamlakat qo'shish"
+        title="Add Country"
         open={isModalVisible}
         onCancel={handleCancel}
         style={{ top: 20 }}
@@ -91,10 +91,10 @@ console.log(selectItem)
           autoComplete="on"
         >
           <Form.Item
-            label="Mamlakat nomini kiriting"
+            label="Enter Country Name"
             name="name"
             rules={[
-              { required: true, message: "Iltimos, mamlakat nomini kiriting!" },
+              { required: true, message: "Please enter the country name!" },
             ]}
           >
             <Input />
@@ -103,10 +103,10 @@ console.log(selectItem)
           <Form.Item>
             <Space size="large">
               <Button htmlType="submit" type="primary">
-                Yuborish
+                Submit
               </Button>
               <Button type="primary" danger onClick={handleCancel}>
-                Bekor qilish
+                Cancel
               </Button>
             </Space>
           </Form.Item>

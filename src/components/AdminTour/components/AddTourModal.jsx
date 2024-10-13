@@ -22,7 +22,7 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
     setIsModalVisible(true);
   };
 
-  // Birinchi modalni yopish va to'liq ekran modalini ko'rsatish
+  // Closing the first modal and opening the full-screen modal
   const handleOk = (values) => {
     console.log("Form Submitted:", values);
     const body = new FormData();
@@ -37,7 +37,7 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
       fetch(API_PATH + "/tour/add", {
         method: "post",
         body: body,
-        header: {
+        headers: {
           "Content-Type": "application/json",
         },
       })
@@ -49,22 +49,23 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
     } catch (error) {
       console.log(error);
     }
-    setIsModalVisible(false); // Birinchi modalni yopish
-    setIsFullScreenModalVisible(true); // To'liq ekran modalni ochish
+    setIsModalVisible(false); // Closing the first modal
+    setIsFullScreenModalVisible(true); // Opening the full-screen modal
   };
 
-  // Modalni yopish
+  // Closing the modal
   const handleCancel = () => {
     setIsModalVisible(false);
-    setIsFullScreenModalVisible(false); // To'liq ekran rejimidan chiqish
-  };
-  // Faylni upload qilinmasligini ta'minlash uchun
-  const beforeUpload = (file) => {
-    setFileList([file]); // Fayl obyektini saqlash
-    return false; // Upload qilinmasligini ta'minlash
+    setIsFullScreenModalVisible(false); // Exiting full-screen mode
   };
 
-  /!* Html editor/;
+  // Preventing the file from being uploaded
+  const beforeUpload = (file) => {
+    setFileList([file]); // Storing the file object
+    return false; // Preventing upload
+  };
+
+  /!* Html editor */;
   const imageConfiguration = {
     resizeOptions: [
       {
@@ -85,8 +86,8 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
     ],
     toolbar: ["resizeImage"],
   };
-  const [data, setdata] = useState("");
-  const [news, setnews] = useState([]);
+  const [data, setData] = useState("");
+  const [news, setNews] = useState([]);
 
   const onReady = (editor) => {
     if (editor.model.schema.isRegistered("image")) {
@@ -144,10 +145,10 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
   return (
     <>
       <Button type="primary" onClick={showModal}>
-        Open Modal
+        Add Tour
       </Button>
 
-      {/* Birinchi modal */}
+      {/* First modal */}
       <Modal
         title="Upload File and Title"
         open={isModalVisible}
@@ -157,10 +158,10 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
         <Form layout="vertical" onFinish={(values) => handleOk({ ...values })}>
           <Form.Item
             name="country_id"
-            label="Mamlakat"
-            rules={[{ required: true, message: "Iltimos mamlakatni tanlang!" }]}
+            label="Country"
+            rules={[{ required: true, message: "Please select a country!" }]}
           >
-            <Select placeholder="Mamlakatni tanlang">
+            <Select placeholder="Select a country">
               {countryData?.map((data) => (
                 <Option key={data.id} value={data.id}>
                   {data.name}
@@ -171,21 +172,19 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
 
           <Form.Item
             name="location"
-            label="Joylashgan joyi"
-            rules={[
-              { required: true, message: "Iltimos joylashuvni kiriting!" },
-            ]}
+            label="Location"
+            rules={[{ required: true, message: "Please enter the location!" }]}
           >
             <Input />
           </Form.Item>
 
           <Form.Item
             name="day"
-            label="Sayohat davomiyligi"
+            label="Duration of Travel"
             rules={[
               {
                 required: true,
-                message: "Iltimos sayohat davomiyligi kiriting!",
+                message: "Please enter the duration of travel!",
               },
             ]}
           >
@@ -194,11 +193,11 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
 
           <Form.Item
             name="file"
-            label="Rasm yuklang"
-            rules={[{ required: true, message: "Iltimos rasm yuklang!" }]}
+            label="Upload Image"
+            rules={[{ required: true, message: "Please upload an image!" }]}
           >
             <Upload beforeUpload={beforeUpload} maxCount={1}>
-              <Button icon={<UploadOutlined />}>Rasm yuklash</Button>
+              <Button icon={<UploadOutlined />}>Upload Image</Button>
             </Upload>
           </Form.Item>
 
@@ -207,18 +206,18 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
           >
             <Space size="large">
               <Button type="primary" htmlType="submit">
-                Yuborish
+                Submit
               </Button>
 
               <Button type="primary" danger onClick={handleCancel}>
-                Bekor qilish
+                Cancel
               </Button>
             </Space>
           </Form.Item>
         </Form>
       </Modal>
 
-      {/* To'liq ekran modal */}
+      {/* Full-screen modal */}
       <Modal
         title="Full Screen Modal"
         open={isFullScreenModalVisible}
@@ -293,7 +292,7 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
             onFocus={(event, editor) => {}}
             onChange={(event, editor) => {
               const data = editor.getData();
-              setdata(data);
+              setData(data);
             }}
             {...props}
           />
@@ -319,7 +318,7 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
                 body: JSON.stringify({
                   id: localStorage.getItem("tour"),
                   data: data,
-                  images: images.image, // Faqat image array jo'natiladi
+                  images: images.image, // Only the image array is sent
                 }),
               })
                 .then((res) => res.json())
@@ -327,7 +326,7 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
                   if (data) handleCancel();
                 });
             } else {
-              console.error("Image array bo'sh yoki topilmadi!");
+              console.error("Image array is empty or not found!");
             }
           }}
         >

@@ -51,9 +51,11 @@ const TourData = ({ openDeleteModal }) => {
       key: "action",
       render: (text, record) => (
         <Space size="large">
-          <Button type="primary" dashed>
-            <NavLink to={`/tour/${record.id}`}>More Info</NavLink>
-          </Button>
+          <NavLink to={`/tour/${record.id}`}>
+            <Button type="primary" dashed>
+              More Info
+            </Button>
+          </NavLink>
           <Button
             type="primary"
             danger
@@ -68,7 +70,7 @@ const TourData = ({ openDeleteModal }) => {
     },
   ];
 
-  return <Table dataSource={dataSource} columns={columns} pagination={false} />;
+  return <Table style={{marginTop: "20px"}} dataSource={dataSource} columns={columns} pagination={false} />;
 };
 
 TourData.propTypes = {

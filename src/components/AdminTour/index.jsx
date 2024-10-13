@@ -42,7 +42,7 @@ const AdminTour = () => {
   }
 
   return (
-    <div className="table">
+    <div>
       <AddTourModal />
       <TourData openDeleteModal={openDeleteModal} />
       <DeleteModal

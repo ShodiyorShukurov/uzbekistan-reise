@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Modal,
@@ -8,14 +8,19 @@ import {
   notification,
   Space,
   message,
-  Select
+  Select,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import Api from "../../../../api";
 
-const {Option}= Select
+const { Option } = Select;
 
-const MainModal = ({ isModalVisible, showModal, handleCancel, refreshData }) => {
+const MainModal = ({
+  isModalVisible,
+  showModal,
+  handleCancel,
+  refreshData,
+}) => {
   const [fileList, setFileList] = useState([]);
   const [form] = Form.useForm();
 
@@ -25,16 +30,16 @@ const MainModal = ({ isModalVisible, showModal, handleCancel, refreshData }) => 
       if (file && typeof file.size === "number") {
         const isLt10M = file.size / 1024 / 1024 < 10; // 10MB
         if (!isLt10M) {
-          message.error(`${file.name} rasm 10MB dan katta bo'lmasligi kerak!`);
+          message.error(`${file.name} must be less than 10MB!`);
           return Upload.LIST_IGNORE;
         }
       } else {
-        message.error("Fayl hajmini aniqlashda xato yuz berdi.");
+        message.error("Error determining file size.");
         return Upload.LIST_IGNORE;
       }
 
       if (fileList.length >= 1) {
-        message.error("Faqat bitta fayl yuklash mumkin!");
+        message.error("You can only upload one file!");
         return Upload.LIST_IGNORE;
       }
 
@@ -56,32 +61,31 @@ const MainModal = ({ isModalVisible, showModal, handleCancel, refreshData }) => 
       formData.append("type", value.type);
     }
 
-
     try {
       const response = await Api.post("/photo/add", formData);
       if (response.data.data) {
         notification.success({
-          message: "Muvaffaqiyatli",
-          description: "Ma'lumot muvaffaqiyatli yuborildi!",
+          message: "Success",
+          description: "Data has been successfully submitted!",
         });
       }
       handleCancel();
-      refreshData()
+      refreshData();
     } catch (error) {
       notification.error({
-        message: "Xatolik",
+        message: "Error",
         description:
-          "Ma'lumot yuborishda xatolik yuz berdi. Iltimos, qayta urinib ko'ring.",
+          "An error occurred while submitting the data. Please try again.",
       });
       console.error("Failed:", error);
     }
   };
 
-  /* Formani yuborishda xato yuz berishida chaqiriladigan funksiya */
+  /* Function called when there is an error in form submission */
   const onFinishFailed = (errorInfo) => {
     notification.error({
-      message: "Formada xatolik",
-      description: "Iltimos, ma'lumotlarni to'g'ri kiriting!",
+      message: "Form Error",
+      description: "Please enter the information correctly!",
     });
     console.log("Failed:", errorInfo);
   };
@@ -89,11 +93,11 @@ const MainModal = ({ isModalVisible, showModal, handleCancel, refreshData }) => 
   return (
     <>
       <Button type="primary" onClick={showModal}>
-        Rasm qo&apos;shish
+        Add Image
       </Button>
 
       <Modal
-        title="Rasm qo'shish"
+        title="Add Image"
         open={isModalVisible}
         onCancel={handleCancel}
         style={{ top: 20 }}
@@ -107,37 +111,39 @@ const MainModal = ({ isModalVisible, showModal, handleCancel, refreshData }) => 
           autoComplete="on"
         >
           <Form.Item
-            label="Rasm"
+            label="Image"
             name="photo"
-            rules={[{ required: true, message: "Iltimos, faylni yuklang!" }]}
+            rules={[{ required: true, message: "Please upload a file!" }]}
           >
             <Upload {...uploadProps} accept="image/*">
-              <Button icon={<UploadOutlined />}>Yuklash uchun bosing</Button>
+              <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>
           </Form.Item>
 
           <Form.Item
             label="Type"
             name="type"
-            rules={[{ required: true, message: "Iltimos, rasm tipini tanglang!" }]}
+            rules={[
+              { required: true, message: "Please select an image type!" },
+            ]}
           >
-            <Select placeholder="Rasm tipini tanglang">
-            <Option key="1" value="1">
-            Gorizontal
-            </Option>
-            <Option key="2" value="2">
-            Vertical
-            </Option>
+            <Select placeholder="Select image type">
+              <Option key="1" value="1">
+                Gorizontal
+              </Option>
+              <Option key="2" value="2">
+                Vertical
+              </Option>
             </Select>
           </Form.Item>
 
           <Form.Item>
             <Space size="large">
               <Button htmlType="submit" type="primary">
-                Yuborish
+                Submit
               </Button>
               <Button type="primary" danger onClick={handleCancel}>
-                Bekor qilish
+                Cancel
               </Button>
             </Space>
           </Form.Item>
