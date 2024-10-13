@@ -6,10 +6,13 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "../tour.css";
 import { API_PATH, API_TOKEN } from "../../../utils/constants";
+import useCountry from "../../../hooks/UseCountry";
 
 const { Option } = Select;
 
 const FullScreenModalWithSecondaryModal = ({ ...props }) => {
+  const { data: countryData } = useCountry();
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isFullScreenModalVisible, setIsFullScreenModalVisible] =
     useState(false);
@@ -29,7 +32,7 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
     body.append("location", values.location);
     body.append("day", values.day);
     body.append("country_id", 1);
-    console.log(...body);
+
     try {
       fetch(API_PATH + "/tour/add", {
         method: "post",
@@ -98,9 +101,7 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
           const id = window.localStorage.getItem("tour");
 
           const found = news.find((e) => e.id == id);
-          console.log("test", id, found);
           const body = new FormData();
-          console.log(...body);
           loader.file.then((file) => {
             body.append("photo", file);
             fetch(`${API_PATH}/tour/upload`, {
@@ -111,11 +112,8 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
               .then((res) => {
                 console.log(res);
                 if (found) {
-                  console.log("found");
                   found.image.push(res.data);
-                  console.log(news);
                 } else {
-                  console.log("a");
                   const tour = {
                     id: id,
                     image: [res.data],
@@ -163,9 +161,11 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
             rules={[{ required: true, message: "Iltimos mamlakatni tanlang!" }]}
           >
             <Select placeholder="Mamlakatni tanlang">
-              <Option key="id" value="id">
-                dasjh
-              </Option>
+              {countryData?.map((data) => (
+                <Option key={data.id} value={data.id}>
+                  {data.name}
+                </Option>
+              ))}
             </Select>
           </Form.Item>
 

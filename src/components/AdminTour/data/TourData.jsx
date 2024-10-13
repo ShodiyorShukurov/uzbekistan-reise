@@ -1,14 +1,12 @@
-import React from "react";
-import { Table, Button, Image } from "antd";
+import { Table, Button, Image, Space } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
 import useTour from "../../../hooks/UseTour";
+import PropTypes from "prop-types";
 
 const TourData = ({ openDeleteModal }) => {
   const { data: tours } = useTour();
-  console.log(tours);
 
-  // Updated data source with image URLs
   const dataSource =
     tours?.length > 0
       ? tours.map((tour) => ({
@@ -46,14 +44,14 @@ const TourData = ({ openDeleteModal }) => {
       align: "center",
       render: (text, record) => (
         <Image width={50} src={record.image} alt={record.name} />
-      ), 
+      ),
     },
     {
       title: "Action",
       key: "action",
       render: (text, record) => (
-        <>
-          <Button type="link">
+        <Space size="large">
+          <Button type="primary" dashed>
             <NavLink to={`/tour/${record.id}`}>More Info</NavLink>
           </Button>
           <Button
@@ -64,13 +62,17 @@ const TourData = ({ openDeleteModal }) => {
           >
             Delete
           </Button>
-        </>
+        </Space>
       ),
       align: "center",
     },
   ];
 
   return <Table dataSource={dataSource} columns={columns} pagination={false} />;
+};
+
+TourData.propTypes = {
+  openDeleteModal: PropTypes.func.isRequired,
 };
 
 export default TourData;
