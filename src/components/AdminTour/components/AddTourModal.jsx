@@ -11,7 +11,7 @@ import Api from "../../../api";
 
 const { Option } = Select;
 
-const FullScreenModalWithSecondaryModal = ({ ...props }) => {
+const FullScreenModalWithSecondaryModal = ({ refreshData, ...props }) => {
   const { data: countryData } = useCountry();
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -24,7 +24,7 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
   };
 
   // Closing the first modal and opening the full-screen modal
-  const handleOk = async(values) => {
+  const handleOk = async (values) => {
     console.log("Form Submitted:", values);
     const body = new FormData();
 
@@ -33,14 +33,13 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
     body.append("location", values.location);
     body.append("day", values.day);
     body.append("country_id", values.country_id);
- 
-    console.log(...body)
+
+    console.log(...body);
     try {
-      const res= await Api.post("/tour/add", body);
-          // console.log(data)
-          console.log(res)
-          localStorage.setItem("tour", res.data.data.id)
-        
+      const res = await Api.post("/tour/add", body);
+      // console.log(data)
+      console.log(res);
+      localStorage.setItem("tour", res.data.data.id);
     } catch (error) {
       console.log(error);
     }
@@ -318,7 +317,10 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
               })
                 .then((res) => res.json())
                 .then((data) => {
-                  if (data) handleCancel();
+                  if (data) {
+                    refreshData();
+                    handleCancel();
+                  }
                 });
             } else {
               console.error("Image array is empty or not found!");

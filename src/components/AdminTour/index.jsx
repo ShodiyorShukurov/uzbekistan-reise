@@ -15,7 +15,8 @@ const AdminTour = () => {
     handleDelete,
     deleteModal,
     setNext,
-    next
+    next,
+    refreshData,
   } = useTour();
    console.log("Current Page:", next);
 
@@ -47,7 +48,7 @@ const AdminTour = () => {
 
   return (
     <div>
-      <AddTourModal />
+      <AddTourModal refreshData={refreshData} />
       <TourData openDeleteModal={openDeleteModal} data={data} />
       <DeleteModal
         closeDeleteModal={closeDeleteModal}
@@ -57,11 +58,13 @@ const AdminTour = () => {
 
       <div className="button-container mt-3">
         {next > 1 && (
-          <Button className="me-4" onClick={() => setNext(next - 1)}>Previous</Button>
+          <Button className="me-4" onClick={() => setNext(next - 1)}>
+            Previous
+          </Button>
         )}
 
         {data?.length > 9 ? (
-          <Button  color="dark" onClick={() => setNext(next + 1)}>
+          <Button color="dark" onClick={() => setNext(next + 1)}>
             Next
           </Button>
         ) : (

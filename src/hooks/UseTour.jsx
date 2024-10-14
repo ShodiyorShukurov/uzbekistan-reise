@@ -69,6 +69,10 @@ const useTour = () => {
     }
   };
 
+   const refreshData = () => {
+     queryClient.invalidateQueries({ queryKey: ["tour"] });
+   };
+
   // Query to fetch tour data, refetches when `next` changes
   const { data, isLoading, error } = useQuery({
     queryKey: ["tour", next], // Include `next` to refetch on change
@@ -87,7 +91,8 @@ const useTour = () => {
     handleDelete,
     deleteModal,
     setNext,
-    next
+    next,
+    refreshData,
   };
 };
 
