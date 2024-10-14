@@ -1,5 +1,5 @@
 import useTour from "../../hooks/UseTour";
-import { Alert } from "antd";
+import { Alert, Button } from "antd";
 import AddTourModal from "./components/AddTourModal";
 import DeleteModal from "./components/DeleteModal";
 import TourData from "./data/TourData";
@@ -7,13 +7,17 @@ import "./tour.css";
 
 const AdminTour = () => {
   const {
+    data,
     isLoading,
     error,
     openDeleteModal,
     closeDeleteModal,
     handleDelete,
     deleteModal,
+    setNext,
+    next
   } = useTour();
+   console.log("Current Page:", next);
 
   if (isLoading) {
     return (
@@ -28,13 +32,13 @@ const AdminTour = () => {
       return (
         <>
           <AddTourModal />
-          <h1>Ma&apos;lumot yo&apos;q </h1>
+          <h1>Data not found </h1>
         </>
       );
     }else{
     return (
       <>
-        <Alert message="Rasmlarni yuklashda xatolik yuz berdi" type="error" />
+        <Alert message="Tourni yuklashda xatolik bor  " type="error" />
       </>
     );
     }
@@ -44,12 +48,28 @@ const AdminTour = () => {
   return (
     <div>
       <AddTourModal />
-      <TourData openDeleteModal={openDeleteModal} />
+      <TourData openDeleteModal={openDeleteModal} data={data} />
       <DeleteModal
         closeDeleteModal={closeDeleteModal}
         deleteModal={deleteModal}
         handleDelete={handleDelete}
       />
+
+      <div className="button-container mt-3">
+        {next > 1 && (
+          <Button className="me-4" onClick={() => setNext(next - 1)}>Previous</Button>
+        )}
+
+        {data?.length > 9 ? (
+          <Button  color="dark" onClick={() => setNext(next + 1)}>
+            Next
+          </Button>
+        ) : (
+          <Button variant="text" color="dark" disabled>
+            Next
+          </Button>
+        )}
+      </div>
     </div>
   );
 };

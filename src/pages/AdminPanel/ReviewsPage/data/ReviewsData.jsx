@@ -1,20 +1,18 @@
 import { Table, Button, Checkbox } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import PropTypes from "prop-types"; // Import PropTypes for validation
-import { useState } from "react"; // Import useState for state management
+import { DeleteOutlined } from "@ant-design/icons";
+import PropTypes from "prop-types"; 
 
-const CountryData = ({ openDeleteModal, handleEdit }) => {
-  // State to manage country data
-  const [data, setData] = useState([
-    { id: 1, country: "Uzbekistan", text: "Uzbekistan", status: false },
-    { id: 2, country: "Kazakhstan", text: "Kazakhstan", status: false },
-    { id: 3, country: "Kyrgyzstan", text: "Kyrgyzstan", status: false },
-    { id: 4, country: "Tajikistan", text: "Tajikistan", status: false },
-    { id: 5, country: "Turkmenistan", text: "Turkmenistan", status: false },
-    { id: 6, country: "Russia", text: "Russia", status: false },
-    { id: 7, country: "China", text: "China", status: false },
-  ]);
+const ReviewsData = ({ openDeleteModal, handleEdit, data }) => {
 
+  const reviewData =
+    data?.length > 0
+      ? data.map((review) => ({
+          id: review.id,
+          name: review.name,
+          text: review.text,
+          status: review.status,
+        }))
+      : [];
 
   const columns = [
     {
@@ -24,9 +22,9 @@ const CountryData = ({ openDeleteModal, handleEdit }) => {
       align: "center",
     },
     {
-      title: "Country Name",
-      dataIndex: "country",
-      key: "country",
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
       align: "center",
     },
     {
@@ -41,7 +39,7 @@ const CountryData = ({ openDeleteModal, handleEdit }) => {
       render: (_, record) => (
         <Checkbox
           checked={record.status}
-          onChange={() => handleEdit("id", "status")}
+          onChange={() => handleEdit(record.id, !record.status)}
         />
       ),
       align: "center",
@@ -69,7 +67,7 @@ const CountryData = ({ openDeleteModal, handleEdit }) => {
     <div className="p-1">
       <Table
         columns={columns}
-        dataSource={data}
+        dataSource={reviewData}
         rowKey="id"
         pagination={false}
       />
@@ -77,9 +75,10 @@ const CountryData = ({ openDeleteModal, handleEdit }) => {
   );
 };
 
-CountryData.propTypes = {
+ReviewsData.propTypes = {
   openDeleteModal: PropTypes.func.isRequired,
   handleEdit: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
 };
 
-export default CountryData;
+export default ReviewsData;

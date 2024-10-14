@@ -1,15 +1,14 @@
 import { Table, Button, Image, Space } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
-import useTour from "../../../hooks/UseTour";
 import PropTypes from "prop-types";
 
-const TourData = ({ openDeleteModal }) => {
-  const { data: tours } = useTour();
+const TourData = ({ openDeleteModal, data}) => {
+  // const { data: tours } = useTour();
 
   const dataSource =
-    tours?.length > 0
-      ? tours.map((tour) => ({
+    data?.length > 0
+      ? data.map((tour) => ({
           id: tour.id,
           day: tour.day,
           location: tour.location,
@@ -75,6 +74,7 @@ const TourData = ({ openDeleteModal }) => {
 
 TourData.propTypes = {
   openDeleteModal: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
 };
 
 export default TourData;

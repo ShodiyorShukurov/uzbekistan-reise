@@ -7,6 +7,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "../tour.css";
 import { API_PATH, API_TOKEN } from "../../../utils/constants";
 import useCountry from "../../../hooks/UseCountry";
+import Api from "../../../api";
 
 const { Option } = Select;
 
@@ -23,7 +24,7 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
   };
 
   // Closing the first modal and opening the full-screen modal
-  const handleOk = (values) => {
+  const handleOk = async(values) => {
     console.log("Form Submitted:", values);
     const body = new FormData();
 
@@ -31,21 +32,15 @@ const FullScreenModalWithSecondaryModal = ({ ...props }) => {
     body.append("photo", values.file.file);
     body.append("location", values.location);
     body.append("day", values.day);
-    body.append("country_id", 1);
-
+    body.append("country_id", values.country_id);
+ 
+    console.log(...body)
     try {
-      fetch(API_PATH + "/tour/add", {
-        method: "post",
-        body: body,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) =>
+      const res= await Api.post("/tour/add", body);
           // console.log(data)
-          localStorage.setItem("tour", data.data.id)
-        );
+          console.log(res)
+          localStorage.setItem("tour", res.data.data.id)
+        
     } catch (error) {
       console.log(error);
     }
