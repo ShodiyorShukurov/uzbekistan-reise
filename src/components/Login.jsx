@@ -20,7 +20,6 @@ const LoginPage = () => {
   };
 
   const handleSubmit = (values, { setSubmitting }) => {
-    console.log("Form Data:", values);
 
     try {
       fetch(API_PATH + "/admin/login", {

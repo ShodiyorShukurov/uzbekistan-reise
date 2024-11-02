@@ -56,12 +56,14 @@ const CarouselModal = ({
 
     try {
       const response = await Api.post("/carousel/add", formData);
+      console.log(response)
       if (response.data.data) {
         notification.success({
           message: "Success",
           description: "Data submitted successfully!",
         });
       }
+      setFileList([])
       handleCancel();
       refreshData();
     } catch (error) {

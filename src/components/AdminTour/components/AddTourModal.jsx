@@ -25,10 +25,9 @@ const FullScreenModalWithSecondaryModal = ({ refreshData, ...props }) => {
 
   // Closing the first modal and opening the full-screen modal
   const handleOk = async (values) => {
-    console.log("Form Submitted:", values);
+
     const body = new FormData();
 
-    console.log(values.file.file);
     body.append("photo", values.file.file);
     body.append("location", values.location);
     body.append("day", values.day);
@@ -38,7 +37,6 @@ const FullScreenModalWithSecondaryModal = ({ refreshData, ...props }) => {
     try {
       const res = await Api.post("/tour/add", body);
       // console.log(data)
-      console.log(res);
       localStorage.setItem("tour", res.data.data.id);
     } catch (error) {
       console.log(error);

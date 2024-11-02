@@ -5,7 +5,7 @@ import Api from "../api";
 import { AxiosError } from "axios";
 
 const useReviews = () => {
-  /*FOR MODAL*/
+  
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [id, setId] = React.useState(null);
   const [next, setNext] = React.useState(1);

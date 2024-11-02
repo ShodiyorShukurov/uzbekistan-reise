@@ -69,6 +69,7 @@ const MainModal = ({
           description: "Data has been successfully submitted!",
         });
       }
+      setFileList([]);
       handleCancel();
       refreshData();
     } catch (error) {
